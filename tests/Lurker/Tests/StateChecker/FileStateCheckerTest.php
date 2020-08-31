@@ -5,7 +5,7 @@ namespace Lurker\Tests\StateChecker;
 use Lurker\Event\FilesystemEvent;
 use Lurker\StateChecker\FileStateChecker;
 
-class FileStateCheckerTest extends \PHPUnit_Framework_TestCase
+class FileStateCheckerTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetResource()
     {

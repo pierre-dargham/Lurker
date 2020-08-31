@@ -8,7 +8,7 @@ use Lurker\Tracker\TrackerInterface;
 use Lurker\Resource\DirectoryResource;
 use Lurker\Resource\FileResource;
 
-abstract class TrackerTest extends \PHPUnit_Framework_TestCase
+abstract class TrackerTest extends \PHPUnit\Framework\TestCase
 {
     protected $tmpDir;
 

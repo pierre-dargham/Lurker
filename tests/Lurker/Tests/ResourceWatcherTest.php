@@ -8,7 +8,7 @@ use Lurker\Event\FilesystemEvent;
 use Lurker\Resource\FileResource;
 use Lurker\Resource\DirectoryResource;
 
-class ResourceWatcherTest extends \PHPUnit_Framework_TestCase
+class ResourceWatcherTest extends \PHPUnit\Framework\TestCase
 {
     private $tracker;
     private $dispatcher;

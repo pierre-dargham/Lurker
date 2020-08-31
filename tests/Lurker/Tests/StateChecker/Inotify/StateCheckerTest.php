@@ -6,7 +6,7 @@ use Lurker\Event\FilesystemEvent;
 use Lurker\Resource\ResourceInterface;
 use Lurker\StateChecker\Inotify\CheckerBag;
 
-abstract class StateCheckerTest extends \PHPUnit_Framework_TestCase
+abstract class StateCheckerTest extends \PHPUnit\Framework\TestCase
 {
     protected $bag;
     protected $resource;

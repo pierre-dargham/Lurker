@@ -7,7 +7,7 @@ use Lurker\StateChecker\Inotify\CheckerBag;
 use Lurker\Tests\StateChecker\Inotify\Fixtures\DirectoryStateCheckerForTest;
 use Lurker\Resource\ResourceInterface;
 
-class DirectoryStateCheckerTest extends \PHPUnit_Framework_TestCase
+class DirectoryStateCheckerTest extends \PHPUnit\Framework\TestCase
 {
     private $bag;
     private $resource;

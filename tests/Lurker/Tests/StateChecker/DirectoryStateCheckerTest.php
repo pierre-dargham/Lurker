@@ -8,7 +8,7 @@ use Lurker\Resource\ResourceInterface;
 use Lurker\Resource\DirectoryResource;
 use Lurker\Resource\FileResource;
 
-class DirectoryStateCheckerTest extends \PHPUnit_Framework_TestCase
+class DirectoryStateCheckerTest extends \PHPUnit\Framework\TestCase
 {
     public function testDeepFileChanged()
     {

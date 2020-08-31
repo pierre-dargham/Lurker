@@ -7,7 +7,7 @@ use Lurker\Resource\DirectoryResource;
 use Lurker\Event\FilesystemEvent;
 use Lurker\Resource\TrackedResource;
 
-class FilesystemEventTest extends \PHPUnit_Framework_TestCase
+class FilesystemEventTest extends \PHPUnit\Framework\TestCase
 {
     public function testConstructAndGetters()
     {
