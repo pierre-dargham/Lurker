@@ -234,7 +234,7 @@ class ResourceWatcherTest extends \PHPUnit_Framework_TestCase
 
     protected function getResourceMock()
     {
-        $resource = $this->getMock('Lurker\\Resource\\ResourceInterface');
+        $resource = $this->getMockBuilder('Lurker\\Resource\\ResourceInterface')->getMock();
 
         $resource
             ->expects($this->any())
