@@ -3,6 +3,8 @@
 Lurkerlite provides PHP utilities for monitoring files and directories for changes.  It is a fork of
 [henrikbjorn/lurker](https://github.com/flint/Lurker/).
 
+[![Build Status](https://travis-ci.com/totten/Lurker.svg?branch=master)](https://travis-ci.com/totten/Lurker)
+
 ## Usage
 
 Use `composer` to install the package:
