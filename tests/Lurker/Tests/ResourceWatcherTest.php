@@ -36,17 +36,23 @@ class ResourceWatcherTest extends \PHPUnit\Framework\TestCase
     {
         $watcher = new ResourceWatcher;
 
-        if (function_exists('inotify_init')) {
-            $this->assertInstanceOf(
-                'Lurker\\Tracker\\InotifyTracker',
-                $watcher->getTracker()
-            );
-        } else {
-            $this->assertInstanceOf(
-                'Lurker\\Tracker\\RecursiveIteratorTracker',
-                $watcher->getTracker()
-            );
-        }
+        // TODO: Re-enable InotifyTracker when it's passing its tests.
+        $this->assertInstanceOf(
+            'Lurker\\Tracker\\RecursiveIteratorTracker',
+            $watcher->getTracker()
+        );
+
+        //if (function_exists('inotify_init')) {
+        //    $this->assertInstanceOf(
+        //        'Lurker\\Tracker\\InotifyTracker',
+        //        $watcher->getTracker()
+        //    );
+        //} else {
+        //    $this->assertInstanceOf(
+        //        'Lurker\\Tracker\\RecursiveIteratorTracker',
+        //        $watcher->getTracker()
+        //    );
+        //}
 
         $this->assertInstanceOf(
             'Lurker\\EventDispatcher\\EventDispatcher',

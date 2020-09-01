@@ -38,8 +38,8 @@ lurkerlite 1.3.0 (2020-08-31)
     to https://github.com/flint/Lurker/pull/29 or https://github.com/flint/Lurker/pull/31.)
   * Use autoload-dev rather than manually adding the tests directory (https://github.com/flint/Lurker/pull/23)
   * Update branch-alias (https://github.com/flint/Lurker/pull/26)
-  * The `InotifyTracker` tests have been reporting failures (eg https://github.com/flint/Lurker/pull/24 and
+  * Use `RecursiveIteratorTracker` as the default -- effectively disabling `InotifyTracker`
+    (unless you specifically opt into it). `InotifyTrackerTest` has been reporting failures (eg https://github.com/flint/Lurker/pull/24 and
     https://github.com/flint/Lurker/issues/32).  The reason is unclear, but it is not any kind of obvious,
-    bisectable cause. (Perhaps it was an upstream change in PHP, pecl/inotify, or Linux? Or perhaps it never worked?)
-    This update took PR `#24` as a starting-point, which addressed some aspects. For the remainder, I've updated
-    the README to describe a "Known Issue".
+    bisectable cause. (Perhaps it was an upstream change in PHP, pecl/inotify, or Linux? Or perhaps it never
+    fully worked?) Turn it off until someone figures out how to fix it.

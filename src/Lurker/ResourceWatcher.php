@@ -38,11 +38,13 @@ class ResourceWatcher
     public function __construct(TrackerInterface $tracker = null, $eventDispatcher = null)
     {
         if (null === $tracker) {
-            if (function_exists('inotify_init')) {
-                $tracker = new InotifyTracker();
-            } else {
-                $tracker = new RecursiveIteratorTracker();
-            }
+            // TODO: Re-enable InotifyTracker when it's passing its tests.
+            $tracker = new RecursiveIteratorTracker();
+            //if (function_exists('inotify_init')) {
+            //    $tracker = new InotifyTracker();
+            //} else {
+            //    $tracker = new RecursiveIteratorTracker();
+            //}
         }
 
         if ($eventDispatcher instanceof \Symfony\Component\EventDispatcher\EventDispatcherInterface) {

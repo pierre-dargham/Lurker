@@ -80,9 +80,9 @@ class InotifyTrackerTest extends TrackerTest
         // If it does trigger both, then they should be done correctly.
         $events = $tracker->getEvents();
         if (count($events) > 0) {
-          $this->assertCount(2, $events);
-          $this->assertHasResourceEvent($subdir, FilesystemEvent::CREATE, $events);
-          $this->assertHasResourceEvent($subdir, FilesystemEvent::DELETE, $events);
+            $this->assertCount(2, $events);
+            $this->assertHasResourceEvent($subdir, FilesystemEvent::CREATE, $events);
+            $this->assertHasResourceEvent($subdir, FilesystemEvent::DELETE, $events);
         }
     }
 
@@ -234,6 +234,12 @@ class InotifyTrackerTest extends TrackerTest
         // SHOULDBE: $this->assertHasResourceEvent($subdir, FilesystemEvent::DELETE, $events);
         $this->assertHasResourceEvent($subdir_new.'/subfile', FilesystemEvent::CREATE, $events);
         // SHOULDBE: $this->assertHasResourceEvent($subfile, FilesystemEvent::DELETE, $events);
+
+        // After renaming subdir, we should continue getting events for the newly named subdir.
+        touch($subfile2 = $subdir_new.'/subfile2');
+        // SHOULDBE: $events = $tracker->getEvents();
+        // SHOULDBE: $this->assertCount(1, $events);
+        // SHOULDBE: $this->assertHasResourceEvent($subfile2, FilesystemEvent::CREATE, $events);
     }
 
     public function testMoveParentDirectoryOfWatchedResource()

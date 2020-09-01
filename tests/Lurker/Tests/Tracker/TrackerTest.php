@@ -105,6 +105,12 @@ abstract class TrackerTest extends \PHPUnit\Framework\TestCase
         $this->assertHasResourceEvent($subdir, FilesystemEvent::DELETE, $events);
         $this->assertHasResourceEvent($subdir_new.'/subfile', FilesystemEvent::CREATE, $events);
         $this->assertHasResourceEvent($subfile, FilesystemEvent::DELETE, $events);
+
+        // After renaming subdir, we should continue getting events for the newly named subdir.
+        touch($subfile2 = $subdir_new.'/subfile2');
+        $events = $tracker->getEvents();
+        $this->assertCount(1, $events);
+        $this->assertHasResourceEvent($subfile2, FilesystemEvent::CREATE, $events);
     }
 
     public function testTrackSimpleFileChanges()

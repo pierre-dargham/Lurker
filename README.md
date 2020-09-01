@@ -49,32 +49,12 @@ $watcher->track('twig.templates', '/path/to/views', FilesystemEvent::ALL);
 
 Note that `FilesystemEvent::ALL` is a special case and of course means it will watch for every type of event.
 
-## Known Issues (*Patch-welcome*)
-
-When a subdirectory (within a monitored directory) is renamed, the backends
-(`InotifyTracker` and `RecursiveIteratorTracker`) do not report events
-in the same way:
-
-* Both trackers report the new name as `CREATED`.
-* `RecursiveIteratorTracker reports the old name as `DELETED`.
-* `InotifyTracker` does not report anything about the old name.
-
-This seems to be workable if you use the watcher for coarse-grained
-decisions about when to fire re-compilation tasks, but it would be inadequate
-for fine-grained tracking of the filesystem state.
-
-See also:
-
-* https://github.com/flint/Lurker/issues/32
-* `\Lurker\Tests\Tracker\TrackerTest::testMoveSubdirResource()`
-* `\Lurker\Tests\Tracker\InotifyTrackerTest::testMoveSubdirResource()`
-
 ## Comparison
 
-`totten/lurkerlite` v1.3 is a fork of [henrikbjorn/lurker](https://github.com/flint/Lurker/) v1.2.  The original `lurker` provides an
-provides a portable `ResourceWatcher` which monitors files and directories.  It uses an optimal implementation ([inotify](php.net/inotify))
-if supported; and it fallsback to a generic polling mechanism when necessary.  This is a great idea, and the implementation has lots of
-tests.
+`totten/lurkerlite` v1.3 is a fork of [henrikbjorn/lurker](https://github.com/flint/Lurker/) v1.2.  The original
+`lurker` provides a portable `ResourceWatcher` which monitors files and directories.  Depending on operating-system and
+runtime support, it chooses a different backend driver for tracking files.  This is a great idea, and the
+implementation has lots of tests.
 
 The distinguishing characteristic of `lurkerlite` is that it has no formal dependencies on other packages, which means it is:
 
@@ -83,3 +63,20 @@ The distinguishing characteristic of `lurkerlite` is that it has no formal depen
 
 `lurkerlite` should be a drop-in replacement for `lurker` *unless* you previously customized the event-dispatcher.  If
 you customized the event-dispatcher, see [CHANGELOG.md](CHANGELOG.md).
+
+## Known Issues (*Patch-welcome*)
+
+Lurker is designed to support multiple file-watching backends, most notably:
+
+* `RecursiveIteratorTracker`: A portable (but less-efficient) backend based on filesystem polling.
+* `InotifyTracker`: A more efficient backend based on the Linux `inotify` API and PECL's `inotify` extension.
+
+At time of writing, `InotifyTracker` does not pass its tests, and the cause has not been determined.  (Did it ever
+work?  Does it only work in certain environments?) Consequently, it is disabled by default in the stable release.
+(To use the unstable implementation, call `new ResourceWatcher(new InotifyTracker())`.
+
+See also:
+
+* `\Lurker\Tests\Tracker\TrackerTest::testMoveSubdirResource()`
+* `\Lurker\Tests\Tracker\InotifyTrackerTest::testMoveSubdirResource()`
+* https://github.com/flint/Lurker/issues/32
