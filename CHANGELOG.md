@@ -36,6 +36,10 @@ lurkerlite 1.3.0 (2020-08-31)
   * Remove dependency on `symfony/config` (https://github.com/flint/Lurker/pull/22)
   * Remove dependency on `symfony/event-dispatcher`. (This is an alternative
     to https://github.com/flint/Lurker/pull/29 or https://github.com/flint/Lurker/pull/31.)
-  * Resolve various issues with inotify tests (https://github.com/flint/Lurker/pull/24)
   * Use autoload-dev rather than manually adding the tests directory (https://github.com/flint/Lurker/pull/23)
   * Update branch-alias (https://github.com/flint/Lurker/pull/26)
+  * The `InotifyTracker` tests have been reporting failures (eg https://github.com/flint/Lurker/pull/24 and
+    https://github.com/flint/Lurker/issues/32).  The reason is unclear, but it is not any kind of obvious,
+    bisectable cause. (Perhaps it was an upstream change in PHP, pecl/inotify, or Linux? Or perhaps it never worked?)
+    This update took PR `#24` as a starting-point, which addressed some aspects. For the remainder, I've updated
+    the README to describe a "Known Issue".

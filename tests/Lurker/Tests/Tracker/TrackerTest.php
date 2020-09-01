@@ -69,6 +69,44 @@ abstract class TrackerTest extends \PHPUnit\Framework\TestCase
         $this->assertHasResourceEvent($file, FilesystemEvent::CREATE, $events);
     }
 
+    public function testMoveFileResource()
+    {
+        $tracker = $this->getTracker();
+
+        mkdir($dir = $this->tmpDir.'/dir');
+        touch($file = $dir.'/file');
+        mkdir($subdir = $dir.'/subdir');
+        touch($subfile = $subdir.'/subfile');
+
+        $tracker->track(new TrackedResource('dir', new DirectoryResource($dir)));
+        rename($file, $file_new = $file.'_new');
+        $events = $tracker->getEvents();
+
+        $this->assertCount(2, $events);
+        $this->assertHasResourceEvent($file_new, FilesystemEvent::CREATE, $events);
+        $this->assertHasResourceEvent($file, FilesystemEvent::DELETE, $events);
+    }
+
+    public function testMoveSubdirResource()
+    {
+        $tracker = $this->getTracker();
+
+        mkdir($dir = $this->tmpDir.'/dir');
+        touch($file = $dir.'/file');
+        mkdir($subdir = $dir.'/subdir');
+        touch($subfile = $subdir.'/subfile');
+
+        $tracker->track(new TrackedResource('dir', new DirectoryResource($dir)));
+        rename($subdir, $subdir_new = $subdir.'_new');
+        $events = $tracker->getEvents();
+
+        $this->assertCount(4, $events);
+        $this->assertHasResourceEvent($subdir_new, FilesystemEvent::CREATE, $events);
+        $this->assertHasResourceEvent($subdir, FilesystemEvent::DELETE, $events);
+        $this->assertHasResourceEvent($subdir_new.'/subfile', FilesystemEvent::CREATE, $events);
+        $this->assertHasResourceEvent($subfile, FilesystemEvent::DELETE, $events);
+    }
+
     public function testTrackSimpleFileChanges()
     {
         $tracker = $this->getTracker();
