@@ -1,13 +1,11 @@
 Getting Started
 ===============
 
-Use composer to install it by adding the following to your `composer.json` file.
+Use `composer` to install the package:
 
 ``` bash
-composer require henrikbjorn/lurker
+composer require totten/lurkerlite
 ```
-
-And then run `composer update henrikbjorn/lurker` to get the package installed.
 
 Tracking Resources
 ------------------
