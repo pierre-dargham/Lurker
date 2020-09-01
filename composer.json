@@ -1,7 +1,7 @@
 {
-    "name"        : "henrikbjorn/lurker",
+    "name"        : "totten/lurkerlite",
     "type"        : "library",
-    "description" : "Resource Watcher.",
+    "description" : "Resource Watcher - Lightweight edition of henrikbjorn/lurker with no dependencies",
     "keywords"    : ["resource", "filesystem", "watching"],
     "license"     : "MIT",
 
@@ -30,7 +30,9 @@
     "autoload-dev": {
         "psr-0" : { "Lurker\\Tests": "tests" }
     },
-
+    "replace" : {
+        "henrikbjorn/lurker": "*"
+    },
     "suggest" : {
         "ext-inotify": ">=0.1.6"
     },
