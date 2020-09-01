@@ -20,7 +20,7 @@ class ResourceWatcherTest extends \PHPUnit\Framework\TestCase
             ->getMock();
 
         $this->dispatcher = $this
-            ->getMockBuilder('Symfony\\Component\\EventDispatcher\\EventDispatcherInterface')
+            ->getMockBuilder('Lurker\\EventDispatcher\\EventDispatcherInterface')
             ->getMock();
     }
 
@@ -49,7 +49,7 @@ class ResourceWatcherTest extends \PHPUnit\Framework\TestCase
         }
 
         $this->assertInstanceOf(
-            'Symfony\\Component\\EventDispatcher\\EventDispatcher',
+            'Lurker\\EventDispatcher\\EventDispatcher',
             $watcher->getEventDispatcher()
         );
     }

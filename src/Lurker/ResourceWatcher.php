@@ -11,8 +11,8 @@ use Lurker\Resource\TrackedResource;
 use Lurker\Tracker\InotifyTracker;
 use Lurker\Tracker\RecursiveIteratorTracker;
 use Lurker\Tracker\TrackerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Lurker\EventDispatcher\EventDispatcher;
+use Lurker\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Resource changes watcher.
@@ -22,6 +22,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class ResourceWatcher
 {
     private $tracker;
+
+    /**
+     * @var EventDispatcherInterface|null
+     */
     private $eventDispatcher;
     private $watching = false;
 
@@ -31,7 +35,7 @@ class ResourceWatcher
      * @param TrackerInterface         $tracker
      * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(TrackerInterface $tracker = null, EventDispatcherInterface $eventDispatcher = null)
+    public function __construct(TrackerInterface $tracker = null, $eventDispatcher = null)
     {
         if (null === $tracker) {
             if (function_exists('inotify_init')) {
@@ -39,6 +43,15 @@ class ResourceWatcher
             } else {
                 $tracker = new RecursiveIteratorTracker();
             }
+        }
+
+        if ($eventDispatcher instanceof \Symfony\Component\EventDispatcher\EventDispatcherInterface) {
+            trigger_error(
+                'In lurkerlite, the ResourceWatcher does not support Symfony EventDispatcher.'
+                . ' See CHANGELOG for upgrade guidance.',
+                E_USER_DEPRECATED
+            );
+            $eventDispatcher = new EventDispatcher();
         }
 
         if (null === $eventDispatcher) {
