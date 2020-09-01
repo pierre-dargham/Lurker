@@ -14,8 +14,9 @@ php:
 
 matrix:
   include:
-    - php: 5.6
-      env: INOTIFY_EXTENSION=pyrus
+    # Pyrus doesn't appear to be available on current Travis env.
+    #- php: 5.6
+    #  env: INOTIFY_EXTENSION=pyrus
     - php: 7.0
       env: INOTIFY_EXTENSION=pecl
     - php: 7.3
