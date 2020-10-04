@@ -18,17 +18,17 @@ lurkerlite 1.3.0 (2020-08-31)
     (`E_USER_DEPRECATED`).
 
   If you need to bridge `lurker` with another event system, then here is an alternative technique: subscribe to the
-  wildcard event (`all`) and pass it to your preferred dispatcher.  This technique should work equally well on
+  wildcard event (`all`) and then delegate to your preferred dispatcher.  This technique should work equally well on
   `lurker` or `lurkerlite`, and it should work with diverse event systems.  Pseudocode:
 
-      ```php
-      $w = new \Lurker\ResourceWatcher();
-      $w->addListener('all', function(\Lurker\Event\FilesystemEvent $e) use ($myDispatcher) {
-        $myEventName = 'resource_watcher.' . $e->getTrackedResource()->getTrackingId();
-        $myEvent = new MyFilesystemEvent($e->getResource(), ...);
-        $myDispatcher->dispatch($myEventName, $myEvent);
-      });
-      ```
+  ```php
+  $w = new \Lurker\ResourceWatcher();
+  $w->addListener('all', function(\Lurker\Event\FilesystemEvent $e) use ($myDispatcher) {
+    $myEventName = 'resource_watcher.' . $e->getTrackedResource()->getTrackingId();
+    $myEvent = new MyFilesystemEvent($e->getResource(), ...);
+    $myDispatcher->dispatch($myEventName, $myEvent);
+  });
+  ```
 
   More detailed list of changes:
 
