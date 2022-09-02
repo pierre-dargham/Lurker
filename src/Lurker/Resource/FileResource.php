@@ -60,18 +60,32 @@ class FileResource implements ResourceInterface
         return $mtime;
     }
 
+    public function getSize()
+    {
+        if (!$this->exists()) {
+            return -1;
+        }
+
+        clearstatcache(true, $this->getResource());
+        if (false === $size = @filesize($this->getResource())) {
+            return -1;
+        }
+
+        return $size;
+    }
+
     public function getId()
     {
         return md5('f' . $this);
     }
 
-    public function isFresh($timestamp)
+    public function isFresh($timestamp, $size)
     {
         if (!$this->exists()) {
             return false;
         }
 
-        return $this->getModificationTime() < $timestamp;
+        return $this->getModificationTime() < $timestamp && $this->getSize() == $size;
     }
 
     public function exists()

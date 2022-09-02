@@ -14,6 +14,7 @@ abstract class ResourceStateChecker implements StateCheckerInterface
 {
     private $resource;
     private $timestamp;
+    private $size;
     private $eventsMask;
     private $deleted = false;
 
@@ -27,6 +28,7 @@ abstract class ResourceStateChecker implements StateCheckerInterface
     {
         $this->resource   = $resource;
         $this->timestamp  = $resource->getModificationTime() + 1;
+        $this->size       = $resource->getSize();
         $this->eventsMask = $eventsMask;
         $this->deleted    = !$resource->exists();
     }
@@ -59,6 +61,7 @@ abstract class ResourceStateChecker implements StateCheckerInterface
         if ($this->deleted) {
             if ($this->resource->exists()) {
                 $this->timestamp = $this->resource->getModificationTime() + 1;
+                $this->size      = $this->resource->getSize();
                 $this->deleted   = false;
 
                 if ($this->supportsEvent($event = FilesystemEvent::CREATE)) {
@@ -77,8 +80,9 @@ abstract class ResourceStateChecker implements StateCheckerInterface
                     'resource' => $this->resource
                 );
             }
-        } elseif (!$this->resource->isFresh($this->timestamp)) {
+        } elseif (!$this->resource->isFresh($this->timestamp, $this->size)) {
             $this->timestamp = $this->resource->getModificationTime() + 1;
+            $this->size      = $this->resource->getSize();
 
             if ($this->supportsEvent($event = FilesystemEvent::MODIFY)) {
                 $changeset[] = array(

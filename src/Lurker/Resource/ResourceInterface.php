@@ -18,6 +18,11 @@ interface ResourceInterface
     public function getModificationTime();
 
     /**
+     * @return integer
+     */
+    public function getSize();
+
+    /**
      * @return string
      */
     public function getId();

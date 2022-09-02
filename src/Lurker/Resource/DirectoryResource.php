@@ -78,7 +78,12 @@ class DirectoryResource implements ResourceInterface
         return $mtime;
     }
 
-    public function isFresh($timestamp)
+    public function getSize()
+    {
+        return -1;
+    }
+
+    public function isFresh($timestamp, $size)
     {
         if (!$this->exists()) {
             return false;
